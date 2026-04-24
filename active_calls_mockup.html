@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#b6ebfe",
+                        "inverse-on-surface": "#9b9d9e",
+                        "on-secondary-fixed-variant": "#2d6272",
+                        "on-background": "#2b3437",
+                        "on-secondary-fixed": "#054555",
+                        "on-surface-variant": "#586064",
+                        "on-error-container": "#752121",
+                        "on-surface": "#2b3437",
+                        "surface-tint": "#436182",
+                        "surface-bright": "#f8f9fa",
+                        "primary-dim": "#365575",
+                        "inverse-surface": "#0c0f10",
+                        "on-primary-fixed": "#224161",
+                        "on-tertiary-fixed": "#22464f",
+                        "tertiary-fixed": "#c6ecf6",
+                        "on-primary-fixed-variant": "#405e7e",
+                        "secondary-fixed": "#b6ebfe",
+                        "surface-dim": "#d1dce0",
+                        "on-secondary": "#f1faff",
+                        "secondary-fixed-dim": "#a9dcef",
+                        "tertiary-dim": "#355861",
+                        "surface-container-lowest": "#ffffff",
+                        "background": "#f8f9fa",
+                        "inverse-primary": "#b6d4fb",
+                        "on-error": "#fff7f6",
+                        "on-tertiary-container": "#355962",
+                        "error-dim": "#4e0309",
+                        "primary-fixed-dim": "#b9d7fd",
+                        "surface-container-low": "#f1f4f6",
+                        "error": "#9f403d",
+                        "surface-container": "#eaeff1",
+                        "primary-fixed": "#d1e4ff",
+                        "error-container": "#fe8983",
+                        "on-tertiary-fixed-variant": "#3f636c",
+                        "on-tertiary": "#effbff",
+                        "surface": "#f8f9fa",
+                        "secondary": "#316676",
+                        "primary": "#436182",
+                        "tertiary-fixed-dim": "#b8dde8",
+                        "outline-variant": "#abb3b7",
+                        "on-secondary-container": "#225868",
+                        "tertiary": "#41646e",
+                        "tertiary-container": "#c6ecf6",
+                        "outline": "#737c7f",
+                        "on-primary-container": "#365474",
+                        "surface-container-highest": "#dbe4e7",
+                        "surface-container-high": "#e3e9ec",
+                        "secondary-dim": "#235a6a",
+                        "primary-container": "#d1e4ff",
+                        "on-primary": "#f5f8ff",
+                        "surface-variant": "#dbe4e7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #dbe4e7; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #abb3b7; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased overflow-hidden">
+<!-- Shared SideNavBar -->
+<aside class="h-screen w-64 flex-col fixed left-0 top-0 bg-slate-100 flex py-6 z-50">
+<div class="px-6 mb-8">
+<h1 class="font-['Manrope'] font-bold text-xl text-slate-800">The Sonic Horizon</h1>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mt-1">AI Agent Orchestrator</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-6 py-3 text-slate-500 hover:bg-slate-200/50 transition-colors font-['Inter'] text-sm tracking-tight font-medium" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center px-6 py-3 text-blue-700 border-l-4 border-blue-700 bg-white/50 font-['Inter'] text-sm tracking-tight font-medium" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="phone_in_talk">phone_in_talk</span> Active Calls
+            </a>
+<a class="flex items-center px-6 py-3 text-slate-500 hover:bg-slate-200/50 transition-colors font-['Inter'] text-sm tracking-tight font-medium" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="campaign">campaign</span> Campaigns
+            </a>
+<a class="flex items-center px-6 py-3 text-slate-500 hover:bg-slate-200/50 transition-colors font-['Inter'] text-sm tracking-tight font-medium" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="forum">forum</span> Chat Bot
+            </a>
+<a class="flex items-center px-6 py-3 text-slate-500 hover:bg-slate-200/50 transition-colors font-['Inter'] text-sm tracking-tight font-medium" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="history">history</span> Call Logs
+            </a>
+<div class="mt-auto pt-8">
+<a class="flex items-center px-6 py-3 text-slate-500 hover:bg-slate-200/50 transition-colors font-['Inter'] text-sm tracking-tight font-medium" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings">settings</span> Settings
+                </a>
+<a class="flex items-center px-6 py-3 text-slate-500 hover:bg-slate-200/50 transition-colors font-['Inter'] text-sm tracking-tight font-medium" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="payments">payments</span> Billing
+                </a>
+</div>
+</nav>
+<div class="px-6 mt-6 pt-6 border-t border-slate-200">
+<div class="flex items-center gap-3">
+<img alt="User profile" class="w-8 h-8 rounded-full object-cover" data-alt="professional male portrait with soft studio lighting and neutral background for profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDr6_asao10hUQpgsiZkvGSg-MQc7I2EP67HKkRg5uNbfFXlHe27IlE8Zjwau5gLXqFV5r7Pa6nURAY9mYINBsm75g63rIeLw0Pc8P_WbkZ1wEdWnIsBEpdGN_I6GJ38uTSiXN0CD5ihPbUW1D8S8dntpaFmU0B4ju2jg2V_b2VIRhe36pYITQrDxQr9yyukX53efHHdyWPl80eKg12Xl-sI4ByrH3UkF1sbu7CpbA9oYVbCLEKoSlwSaG97daHsrwz3BNH8TblR2k"/>
+<div>
+<p class="text-xs font-bold">Alex Chen</p>
+<p class="text-[10px] text-on-surface-variant">Admin Level 4</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Shared TopNavBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 bg-white/80 backdrop-blur-xl flex items-center justify-between px-8 z-40 border-b border-slate-100 shadow-sm">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-high/50 border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/20" placeholder="Search active streams..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 bg-error rounded-full animate-pulse"></span>
+<span class="text-xs font-bold uppercase tracking-widest text-error">Live: 24 Calls</span>
+</div>
+<div class="flex items-center gap-4 border-l border-slate-100 pl-6">
+<button class="text-slate-400 hover:text-blue-600 transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-slate-400 hover:text-blue-600 transition-all">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content: The Minimalist Canvas (3-Pane Layout) -->
+<main class="ml-64 mt-16 h-[calc(100vh-4rem)] flex">
+<!-- Left Pane: Recent Calls (30%) -->
+<section class="w-[30%] bg-surface flex flex-col">
+<div class="p-6 pb-2">
+<h2 class="font-headline font-bold text-xl tracking-tight text-on-surface">Queue Monitor</h2>
+<p class="text-xs text-on-surface-variant mt-1">Real-time status of current AI interactions</p>
+</div>
+<div class="flex-1 overflow-y-auto px-4 py-4 space-y-3">
+<!-- Call Item 1: Active -->
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm border-l-4 border-primary transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-bold bg-primary-container text-on-primary-container px-2 py-0.5 rounded uppercase">Connected</span>
+<span class="text-[10px] font-medium text-on-surface-variant">04:12</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+<div>
+<p class="text-sm font-bold leading-tight">Sarah Jenkins</p>
+<p class="text-xs text-on-surface-variant">Inbound: Tech Support</p>
+</div>
+</div>
+</div>
+<!-- Call Item 2 -->
+<div class="p-4 rounded-xl hover:bg-surface-container-low transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-bold bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded uppercase">Synthesizing</span>
+<span class="text-[10px] font-medium text-on-surface-variant">01:45</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant group-hover:bg-white transition-colors">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+<div>
+<p class="text-sm font-semibold leading-tight">Marcus Thorne</p>
+<p class="text-xs text-on-surface-variant">Outbound: Follow-up</p>
+</div>
+</div>
+</div>
+<!-- Call Item 3 -->
+<div class="p-4 rounded-xl hover:bg-surface-container-low transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-bold bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded uppercase">Transcribing</span>
+<span class="text-[10px] font-medium text-on-surface-variant">08:22</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant group-hover:bg-white transition-colors">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+<div>
+<p class="text-sm font-semibold leading-tight">Elena Rodriguez</p>
+<p class="text-xs text-on-surface-variant">Inbound: Billing Query</p>
+</div>
+</div>
+</div>
+<!-- Call Item 4 -->
+<div class="p-4 rounded-xl hover:bg-surface-container-low transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-bold bg-surface-container-highest text-on-surface-variant px-2 py-0.5 rounded uppercase">Waiting</span>
+<span class="text-[10px] font-medium text-on-surface-variant">00:30</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant group-hover:bg-white transition-colors">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+<div>
+<p class="text-sm font-semibold leading-tight">Anonymous User</p>
+<p class="text-xs text-on-surface-variant">Queue: Sales</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Center Pane: Real-time Transcript (40%) -->
+<section class="w-[40%] bg-surface-container-low flex flex-col border-x-0">
+<!-- Transcription Header -->
+<div class="p-6 bg-white/40 backdrop-blur-md">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="font-headline font-extrabold text-lg flex items-center gap-2">
+                            Live Stream: Agent Alpha
+                        </h3>
+<p class="text-xs text-on-surface-variant">Processing with GPT-4 Voice Engine</p>
+</div>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm text-primary">
+<span class="material-symbols-outlined text-lg" data-icon="volume_up">volume_up</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm text-error">
+<span class="material-symbols-outlined text-lg" data-icon="call_end">call_end</span>
+</button>
+</div>
+</div>
+<!-- Waveform Visualizer simulation -->
+<div class="mt-6 flex items-end justify-center gap-[3px] h-12">
+<div class="w-1 bg-secondary rounded-full h-4 opacity-40"></div>
+<div class="w-1 bg-secondary rounded-full h-8 opacity-60"></div>
+<div class="w-1 bg-secondary rounded-full h-12 opacity-80"></div>
+<div class="w-1 bg-secondary rounded-full h-6 opacity-50"></div>
+<div class="w-1 bg-secondary rounded-full h-10 opacity-90 shadow-[0_0_8px_rgba(49,102,118,0.4)]"></div>
+<div class="w-1 bg-secondary rounded-full h-4 opacity-40"></div>
+<div class="w-1 bg-secondary rounded-full h-10 opacity-70"></div>
+<div class="w-1 bg-secondary rounded-full h-6 opacity-50"></div>
+<div class="w-1 bg-secondary rounded-full h-8 opacity-80"></div>
+<div class="w-1 bg-secondary rounded-full h-4 opacity-40"></div>
+<div class="w-1 bg-secondary rounded-full h-12 opacity-90 shadow-[0_0_8px_rgba(49,102,118,0.4)]"></div>
+<div class="w-1 bg-secondary rounded-full h-8 opacity-60"></div>
+</div>
+</div>
+<!-- Scrollable Transcript Area -->
+<div class="flex-1 overflow-y-auto p-8 space-y-8">
+<!-- Transcript Bubble: Agent -->
+<div class="flex flex-col items-start max-w-[85%]">
+<div class="flex items-center gap-2 mb-2">
+<span class="text-[10px] font-bold uppercase tracking-wider text-primary">Agent Alpha</span>
+<span class="text-[10px] text-on-surface-variant">10:04:12</span>
+</div>
+<div class="bg-primary/5 p-4 rounded-xl rounded-tl-none border-l-2 border-primary/20">
+<p class="text-sm leading-relaxed text-on-surface">Hello Sarah, I've pulled up your account. I see you're calling about the intermittent fiber connection in the Austin area. Is that correct?</p>
+</div>
+</div>
+<!-- Transcript Bubble: User -->
+<div class="flex flex-col items-end ml-auto max-w-[85%] text-right">
+<div class="flex items-center gap-2 mb-2 justify-end">
+<span class="text-[10px] text-on-surface-variant">10:04:25</span>
+<span class="text-[10px] font-bold uppercase tracking-wider text-secondary">Sarah J.</span>
+</div>
+<div class="bg-white p-4 rounded-xl rounded-tr-none shadow-sm">
+<p class="text-sm leading-relaxed text-on-surface">Yes, it's been dropping every 20 minutes since the storm last night. I'm working from home and it's quite frustrating.</p>
+</div>
+<div class="mt-1 flex gap-2">
+<span class="text-[10px] bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded">Sentiment: Concerned</span>
+</div>
+</div>
+<!-- Transcript Bubble: Agent -->
+<div class="flex flex-col items-start max-w-[85%]">
+<div class="flex items-center gap-2 mb-2">
+<span class="text-[10px] font-bold uppercase tracking-wider text-primary">Agent Alpha</span>
+<span class="text-[10px] text-on-surface-variant">10:04:38</span>
+</div>
+<div class="bg-primary/5 p-4 rounded-xl rounded-tl-none border-l-2 border-primary/20">
+<p class="text-sm leading-relaxed text-on-surface">I completely understand the frustration, especially while working. I'm running a remote diagnostic on your ONT box right now. Just a moment...</p>
+</div>
+</div>
+<!-- Transcript Bubble: User (Real-time Typing/Synthesizing) -->
+<div class="flex flex-col items-end ml-auto max-w-[85%] text-right opacity-60">
+<div class="flex items-center gap-2 mb-2 justify-end">
+<span class="text-[10px] text-on-surface-variant italic">Transcribing live...</span>
+<span class="text-[10px] font-bold uppercase tracking-wider text-secondary">Sarah J.</span>
+</div>
+<div class="bg-white p-4 rounded-xl rounded-tr-none shadow-sm">
+<p class="text-sm leading-relaxed text-on-surface italic">"Okay, thank you. Should I restart the router while you're—"</p>
+</div>
+</div>
+</div>
+<!-- Suggestion Bar -->
+<div class="p-4 border-t border-slate-100 bg-white/20">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-3 px-2">AI Suggested Responses</p>
+<div class="flex gap-2">
+<button class="text-xs bg-white border border-slate-200 px-4 py-2 rounded-lg hover:bg-primary-container transition-colors shadow-sm">Suggest Router Reboot</button>
+<button class="text-xs bg-white border border-slate-200 px-4 py-2 rounded-lg hover:bg-primary-container transition-colors shadow-sm">Offer Billing Credit</button>
+<button class="text-xs bg-white border border-slate-200 px-4 py-2 rounded-lg hover:bg-primary-container transition-colors shadow-sm">Escalate to Human</button>
+</div>
+</div>
+</section>
+<!-- Right Pane: Caller Profile & CRM (30%) -->
+<section class="w-[30%] bg-surface flex flex-col overflow-y-auto">
+<div class="p-8">
+<!-- Profile Header -->
+<div class="flex flex-col items-center text-center mb-8">
+<div class="relative">
+<img alt="Caller profile" class="w-24 h-24 rounded-2xl object-cover shadow-xl mb-4" data-alt="close up portrait of a young professional woman with a friendly expression and bright natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzJDc2sSCEe0gTGCoTBHKtDcHTiGWtOX6iD71IxWBwDby06_LIeUurBe04-AMGIElXlKIgIRPcaair7womogVXzDw62n0bUXhIT5pBfKnIr6vJ9L4zW7bCLrFmQ5Jsqy9l7fU2u6V6XdQwtMOvrv0Zu0KMeO1T-lg8rj41UUp3ncB3C7gCInFW8bN9Gx__f9g1Q01sj-WkL1aGuR7SBsCjaib1461mpG25jY1ncdtnkavtp7NN5RxnJOP_RusEWPl1gLFz-vei7W0"/>
+<div class="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 border-4 border-surface rounded-full"></div>
+</div>
+<h2 class="font-headline font-bold text-2xl text-on-surface">Sarah Jenkins</h2>
+<p class="text-sm text-on-surface-variant">Premium Residential Tier</p>
+<div class="flex gap-2 mt-4">
+<span class="text-[10px] font-bold bg-primary text-on-primary px-3 py-1 rounded-full">Customer since 2019</span>
+<span class="text-[10px] font-bold bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full">LTV: $4.2k</span>
+</div>
+</div>
+<!-- Bento Info Grid -->
+<div class="grid grid-cols-2 gap-4 mb-8">
+<div class="bg-surface-container-low p-4 rounded-xl">
+<p class="text-[10px] font-bold uppercase text-on-surface-variant mb-1">Location</p>
+<p class="text-sm font-semibold">Austin, TX</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl">
+<p class="text-[10px] font-bold uppercase text-on-surface-variant mb-1">Local Time</p>
+<p class="text-sm font-semibold">10:04 AM</p>
+</div>
+<div class="col-span-2 bg-surface-container-low p-4 rounded-xl">
+<p class="text-[10px] font-bold uppercase text-on-surface-variant mb-1">Services</p>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="bg-white px-2 py-0.5 rounded border border-slate-200 text-[10px] font-medium">Fiber 1G</span>
+<span class="bg-white px-2 py-0.5 rounded border border-slate-200 text-[10px] font-medium">Smart Home Pro</span>
+<span class="bg-white px-2 py-0.5 rounded border border-slate-200 text-[10px] font-medium">Horizon Mobile</span>
+</div>
+</div>
+</div>
+<!-- Contact History -->
+<div class="mb-8">
+<h4 class="font-headline font-bold text-sm mb-4">Contact History</h4>
+<div class="space-y-4">
+<div class="flex gap-3">
+<div class="flex flex-col items-center">
+<div class="w-2 h-2 rounded-full bg-primary mt-1.5"></div>
+<div class="w-px flex-1 bg-outline-variant/30 my-1"></div>
+</div>
+<div>
+<p class="text-xs font-bold">Billing Inquiry</p>
+<p class="text-[10px] text-on-surface-variant mb-1">Oct 12, 2023 • AI Agent Delta</p>
+<p class="text-[10px] text-on-surface leading-tight bg-surface-container-low p-2 rounded">Resolved: Automatic payment update successful.</p>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="flex flex-col items-center">
+<div class="w-2 h-2 rounded-full bg-outline-variant mt-1.5"></div>
+<div class="w-px flex-1 bg-outline-variant/30 my-1"></div>
+</div>
+<div>
+<p class="text-xs font-bold">Plan Upgrade</p>
+<p class="text-[10px] text-on-surface-variant mb-1">Aug 04, 2023 • Web Portal</p>
+</div>
+</div>
+</div>
+</div>
+<!-- CRM Notes Area -->
+<div>
+<div class="flex items-center justify-between mb-4">
+<h4 class="font-headline font-bold text-sm">CRM Notes</h4>
+<button class="text-[10px] font-bold text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]" data-icon="add">add</span> New Note
+                        </button>
+</div>
+<div class="space-y-3">
+<div class="p-3 bg-surface-container-high rounded-lg">
+<p class="text-xs italic text-on-surface">"Prefers evening call-backs. Highly technical user, skip basic troubleshooting steps when possible."</p>
+<p class="text-[10px] text-on-surface-variant mt-2">— Added by Admin on Sep 15</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>

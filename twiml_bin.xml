@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Twilio TwiML Bin — bidirectional Media Stream
+  ═══════════════════════════════════════════════
+  Setup instructions:
+    1. Deploy telephony_bridge.py and note your public HTTPS URL.
+    2. Replace YOUR_PUBLIC_URL_HERE with your domain (e.g. from ngrok or your server).
+       The URL must use wss:// (WebSocket Secure).
+    3. In the Twilio Console → TwiML Bins, create a new Bin and paste this XML.
+    4. On your Twilio phone number page, set:
+         "A call comes in" → TwiML Bin → select this Bin.
+    5. Inbound calls will now stream audio to your FastAPI server in real time.
+
+  Alternatively, skip this file and point Twilio at:
+    https://YOUR_PUBLIC_URL_HERE/twiml
+  The FastAPI /twiml endpoint generates this XML dynamically from TWILIO_STREAM_URL in .env.
+-->
+<Response>
+  <Connect>
+    <Stream url="wss://YOUR_PUBLIC_URL_HERE/twilio-stream"/>
+  </Connect>
+</Response>

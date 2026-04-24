@@ -1,0 +1,89 @@
+# ============================================================
+# Voice AI Platform — .gitignore
+# ============================================================
+
+# ── Secrets & credentials ────────────────────────────────────
+.env
+.env.local
+.env.*.local
+*.secret
+*.pem
+*.key
+secrets/
+
+# ── Python ───────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+pip-wheel-metadata/
+
+# ── Virtual environments ──────────────────────────────────────
+.venv/
+.venv-1/
+venv/
+env/
+ENV/
+
+# ── Django ───────────────────────────────────────────────────
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+local_settings.py
+
+# ── pytest / coverage ─────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+*.cover
+
+# ── Node / Next.js ───────────────────────────────────────────
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.vercel/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# ── graphify outputs ─────────────────────────────────────────
+# Keep GRAPH_REPORT.md and graph.html as documentation,
+# but exclude large JSON blobs and temp files
+graphify-out/graph.json
+graphify-out/graph_rag.json
+graphify-out/.graphify_*.json
+graphify-out/.graphify_*.txt
+graphify-out/*.svg
+graphify-out/cypher.txt
+.graphify_python
+
+# ── OS / editor artifacts ────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ── Logs ─────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Claude Code / AI agent tooling ──────────────────────────
+.claude/settings.local.json   # machine-specific tool permissions
+.agent/                        # personal Claude skills (not project code)
+
+# ── Misc ─────────────────────────────────────────────────────
+*.bak
+*.tmp
+.cache/

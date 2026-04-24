@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Sonic Horizon - AI Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#b6ebfe",
+                    "inverse-on-surface": "#9b9d9e",
+                    "on-secondary-fixed-variant": "#2d6272",
+                    "on-background": "#2b3437",
+                    "on-secondary-fixed": "#054555",
+                    "on-surface-variant": "#586064",
+                    "on-error-container": "#752121",
+                    "on-surface": "#2b3437",
+                    "surface-tint": "#436182",
+                    "surface-bright": "#f8f9fa",
+                    "primary-dim": "#365575",
+                    "inverse-surface": "#0c0f10",
+                    "on-primary-fixed": "#224161",
+                    "on-tertiary-fixed": "#22464f",
+                    "tertiary-fixed": "#c6ecf6",
+                    "on-primary-fixed-variant": "#405e7e",
+                    "secondary-fixed": "#b6ebfe",
+                    "surface-dim": "#d1dce0",
+                    "on-secondary": "#f1faff",
+                    "secondary-fixed-dim": "#a9dcef",
+                    "tertiary-dim": "#355861",
+                    "surface-container-lowest": "#ffffff",
+                    "background": "#f8f9fa",
+                    "inverse-primary": "#b6d4fb",
+                    "on-error": "#fff7f6",
+                    "on-tertiary-container": "#355962",
+                    "error-dim": "#4e0309",
+                    "primary-fixed-dim": "#b9d7fd",
+                    "surface-container-low": "#f1f4f6",
+                    "error": "#9f403d",
+                    "surface-container": "#eaeff1",
+                    "primary-fixed": "#d1e4ff",
+                    "error-container": "#fe8983",
+                    "on-tertiary-fixed-variant": "#3f636c",
+                    "on-tertiary": "#effbff",
+                    "surface": "#f8f9fa",
+                    "secondary": "#316676",
+                    "primary": "#436182",
+                    "tertiary-fixed-dim": "#b8dde8",
+                    "outline-variant": "#abb3b7",
+                    "on-secondary-container": "#225868",
+                    "tertiary": "#41646e",
+                    "tertiary-container": "#c6ecf6",
+                    "outline": "#737c7f",
+                    "on-primary-container": "#365474",
+                    "surface-container-highest": "#dbe4e7",
+                    "surface-container-high": "#e3e9ec",
+                    "secondary-dim": "#235a6a",
+                    "primary-container": "#d1e4ff",
+                    "on-primary": "#f5f8ff",
+                    "surface-variant": "#dbe4e7"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .headline-font { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 flex-col fixed left-0 top-0 bg-slate-100 dark:bg-slate-900 font-['Inter'] text-sm tracking-tight font-medium flex z-50">
+<div class="flex flex-col h-full py-6">
+<div class="px-6 mb-10">
+<h1 class="font-['Manrope'] font-bold text-xl text-slate-800 dark:text-slate-100">The Sonic Horizon</h1>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant/60 mt-1">AI Agent Orchestrator</p>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<!-- Dashboard Active -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-blue-700 dark:text-blue-300 border-l-4 border-blue-700 dark:border-blue-300 bg-white/50 dark:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" href="#">
+<span class="material-symbols-outlined">phone_in_talk</span>
+<span>Active Calls</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" href="#">
+<span class="material-symbols-outlined">campaign</span>
+<span>Campaigns</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span>Chat Bot</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" href="#">
+<span class="material-symbols-outlined">history</span>
+<span>Call Logs</span>
+</a>
+</nav>
+<div class="mt-auto px-3 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span>Billing</span>
+</a>
+<div class="mt-6 px-4 py-4 rounded-xl bg-surface-container-high/40 flex items-center gap-3">
+<img alt="User profile" class="w-8 h-8 rounded-full bg-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAYifOSwRstRnTlKqh_3lEHgxorEkDtLpY3V10VkuXlvW0XG31MO9XliRUIr0-kMo17ZTY55DQ4XIN9wauKO9GkuQBm3NqqMzZFvhXZH-p6_BiXpDJWLw52E9kygE3WA4-iDhvbhTXvkIRyvGBVJu2eBsqawO8qmsssisIg0prmijeWq_6_wuHUiMq31P1_aff51b_w6GGXvOqwpUytlar6U58XT1xUr3uAxDNfBZL2_3XpoOuemcvaRe3n7Is2GE_Lp0A-oKUdsU"/>
+<div class="overflow-hidden">
+<p class="text-xs font-bold truncate">Alex Sterling</p>
+<p class="text-[10px] text-on-surface-variant truncate">Premium Plan</p>
+</div>
+</div>
+</div>
+</div>
+<!-- style_separation_logic -->
+<div class="absolute right-0 top-0 bg-slate-200 dark:bg-slate-800 w-[1px] h-full"></div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl flex items-center justify-between px-8 z-40 border-b border-slate-100 dark:border-slate-800 font-['Manrope'] font-semibold tracking-wide">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/20 placeholder:text-on-surface-variant/50" placeholder="Search analytics, agents, or logs..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-slate-400 hover:text-blue-600 transition-all active:scale-95 duration-100">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-slate-400 hover:text-blue-600 transition-all active:scale-95 duration-100">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant/20 mx-2"></div>
+<img alt="User profile avatar" class="w-8 h-8 rounded-full border border-outline-variant/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMUYWc4o1sjafWhkCPZ1BI0YdNJA4B4bwP4cnlbhBDFbh4-w1rIjVgC7Kr-6zO28qNpwMQCEY5-DxFgUtEXK8hum4eHbDQ9tnL5BUBM9Ay8Jv1z3MBIOkTGdyvCrQXIemJoyfEqjwVYpo3Vi_JADgG7_-fWbGccFuAc6bTOau7k6U1ZFR4RhFttiqVW7DnwM1OtICr8R-iXigDdE9H1rZiS76kJnt05RJ-Dve7USQPi9VDR38GvYQ71bdwug33p5IzR-Cs222SuIM"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-16 min-h-screen">
+<div class="max-w-7xl mx-auto px-8 py-10">
+<!-- Header Section -->
+<div class="mb-10 flex justify-between items-end">
+<div>
+<h2 class="text-3xl headline-font font-extrabold tracking-tight text-on-surface mb-2">Operational Overview</h2>
+<p class="text-on-surface-variant font-medium">Real-time performance tracking for your AI workforce.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-5 py-2.5 rounded-lg bg-surface-container-lowest text-on-surface text-sm font-semibold shadow-sm border border-outline-variant/10 hover:bg-surface-container-low transition-colors">
+                        Download Report
+                    </button>
+<button class="px-5 py-2.5 rounded-lg bg-gradient-to-br from-primary to-primary-dim text-on-primary text-sm font-semibold shadow-md active:scale-95 transition-all">
+                        Deploy New Agent
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Metrics -->
+<div class="grid grid-cols-12 gap-6 mb-10">
+<!-- Main Metric Card: Call Volume -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest p-8 rounded-xl relative overflow-hidden group">
+<div class="flex justify-between items-start mb-8">
+<div>
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-1">Total Call Volume</p>
+<h3 class="text-4xl headline-font font-extrabold text-primary">124,892</h3>
+<div class="flex items-center gap-2 mt-2">
+<span class="flex items-center text-[10px] font-bold text-secondary bg-secondary-container/30 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-xs mr-0.5">trending_up</span>
+                                    14.2%
+                                </span>
+<span class="text-[10px] text-on-surface-variant">vs last month</span>
+</div>
+</div>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-surface-container-low text-[10px] font-bold rounded-md cursor-pointer hover:bg-surface-container-high">7D</span>
+<span class="px-3 py-1 bg-primary text-on-primary text-[10px] font-bold rounded-md cursor-pointer">30D</span>
+<span class="px-3 py-1 bg-surface-container-low text-[10px] font-bold rounded-md cursor-pointer hover:bg-surface-container-high">90D</span>
+</div>
+</div>
+<!-- Line Chart Visualization -->
+<div class="h-64 flex items-end gap-1 group/chart">
+<div class="flex-1 bg-primary/10 rounded-t-sm h-[40%] transition-all hover:bg-primary/30"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-[55%] transition-all hover:bg-primary/30"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-[48%] transition-all hover:bg-primary/30"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-[62%] transition-all hover:bg-primary/30"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-[75%] transition-all hover:bg-primary/30"></div>
+<div class="flex-1 bg-primary/20 rounded-t-sm h-[88%] transition-all hover:bg-primary/40 relative">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-on-primary text-[10px] py-1 px-2 rounded whitespace-nowrap opacity-0 group-hover/chart:opacity-100 transition-opacity">Peak: 4.2k calls</div>
+</div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-[60%] transition-all hover:bg-primary/30"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-[52%] transition-all hover:bg-primary/30"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-[68%] transition-all hover:bg-primary/30"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-[80%] transition-all hover:bg-primary/30"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-[72%] transition-all hover:bg-primary/30"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-[95%] transition-all hover:bg-primary/30"></div>
+</div>
+</div>
+<!-- Secondary Metric: Conversion -->
+<div class="col-span-12 lg:col-span-4 bg-primary text-on-primary p-8 rounded-xl flex flex-col justify-between shadow-xl shadow-primary/20">
+<div>
+<p class="text-xs font-bold opacity-60 uppercase tracking-widest mb-1">Conversion Rate</p>
+<h3 class="text-5xl headline-font font-extrabold mb-4">68.4%</h3>
+<p class="text-sm opacity-80 leading-relaxed">Your AI agents are currently outperforming human benchmarks by 12.5% in the retail sector.</p>
+</div>
+<div class="mt-6 pt-6 border-t border-on-primary/10">
+<div class="flex justify-between text-xs font-bold mb-2">
+<span>Target Completion</span>
+<span>92%</span>
+</div>
+<div class="w-full bg-on-primary/20 h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full w-[92%] rounded-full shadow-[0_0_8px_rgba(182,235,254,0.5)]"></div>
+</div>
+</div>
+</div>
+<!-- Metric Card: Handling Time -->
+<div class="col-span-12 md:col-span-4 bg-surface-container-low p-6 rounded-xl">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">timer</span>
+</div>
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Avg. Handling Time</p>
+</div>
+<div class="flex items-baseline gap-2">
+<h4 class="text-2xl headline-font font-bold">2m 14s</h4>
+<span class="text-xs text-error font-bold flex items-center">
+<span class="material-symbols-outlined text-xs">trending_down</span>
+                            4%
+                        </span>
+</div>
+<p class="text-[10px] text-on-surface-variant mt-2">Decreased from 2m 21s last week</p>
+</div>
+<!-- Metric Card: Satisfaction -->
+<div class="col-span-12 md:col-span-4 bg-surface-container-low p-6 rounded-xl">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">sentiment_very_satisfied</span>
+</div>
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Sentiment Score</p>
+</div>
+<div class="flex items-baseline gap-2">
+<h4 class="text-2xl headline-font font-bold">4.8/5.0</h4>
+<span class="text-xs text-secondary font-bold flex items-center">
+<span class="material-symbols-outlined text-xs">star</span>
+                            Top 1%
+                        </span>
+</div>
+<p class="text-[10px] text-on-surface-variant mt-2">Based on 12k post-call surveys</p>
+</div>
+<!-- Metric Card: Active Agents -->
+<div class="col-span-12 md:col-span-4 bg-surface-container-low p-6 rounded-xl">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">smart_toy</span>
+</div>
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Active Agents</p>
+</div>
+<div class="flex items-baseline gap-2">
+<h4 class="text-2xl headline-font font-bold">42</h4>
+<span class="text-xs text-on-surface-variant font-medium">Currently online</span>
+</div>
+<div class="flex -space-x-2 mt-3">
+<div class="w-6 h-6 rounded-full border-2 border-white bg-slate-200"></div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-slate-300"></div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-slate-400"></div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-primary text-on-primary text-[8px] flex items-center justify-center font-bold">+38</div>
+</div>
+</div>
+</div>
+<!-- Table/List Section: Recent AI Interactions -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm">
+<div class="flex justify-between items-center mb-8">
+<h3 class="text-xl headline-font font-bold">Recent Orchestrations</h3>
+<button class="text-primary text-xs font-bold hover:underline">View all logs</button>
+</div>
+<div class="space-y-4">
+<!-- Row 1 -->
+<div class="flex items-center p-4 rounded-lg bg-surface transition-colors hover:bg-surface-container-low group">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0">
+<img alt="Agent Avatar" class="w-full h-full object-cover" data-alt="close-up portrait of a sleek metallic robotic head with glowing blue eyes in a professional studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkFh7wjZMGkj3TSpdTfC8uALMx5Hsx-_N3QOthaXy3iarWgQbKre0FuN7QN31TrSA6IqVkyTLqYUgJyuasDyo2XMaaEncIG3XKPkdwGKXuTT20WqBNMaE_jWHoZYv012FShlOk-dEWBf9MqTX1ewUm7rMcR2Pf2te_cNUq-IUspgnYi4QEK3R-8edmV8YruUFtS-_zxlhaq8TDyV2Z9uGaNi0ypV-vOU2lyiZ5XHxpUGv5HSTHA3NBwzJCS2uAiXBDMYn9koXyk6s"/>
+</div>
+<div class="ml-4 flex-1">
+<p class="text-sm font-bold">Outbound: Sarah AI</p>
+<p class="text-xs text-on-surface-variant">Customer: James Wilson</p>
+</div>
+<div class="mx-4 px-3 py-1 rounded bg-secondary-container/40 text-on-secondary-container text-[10px] font-bold">
+                            Completed
+                        </div>
+<div class="w-32 text-right">
+<p class="text-xs font-bold">04:12</p>
+<p class="text-[10px] text-on-surface-variant">2 mins ago</p>
+</div>
+<div class="ml-8">
+<button class="p-2 rounded-full hover:bg-white text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-sm">play_arrow</span>
+</button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="flex items-center p-4 rounded-lg bg-white group">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0">
+<img alt="Agent Avatar" class="w-full h-full object-cover" data-alt="stylized futuristic icon of a speech bubble containing circuit board patterns with elegant silver finish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTQ_JYfp1bYMgdtgxP-U93oToJgVf1Q2avrrxyZGxPBBDLFAl257UUbArCeK9K6b_81hnoFOpHi83yG2modtNa1rYdNKW_0d4x3RIRx6qb2KUqEPQ6muS9yAosFSiqTffi37ZKbww-lMHPHCvgv2t_Vx5sII1HlY6NKpMTDoCulURrDEgB0A2IIaMNbLvwfX0Q2zW4sxmQCXbgh87ja9w7RpT1BoTb8tG_NF5_RPptSgmtY9aa_ftp4On8b3SJoaQszCplBd-zO7g"/>
+</div>
+<div class="ml-4 flex-1">
+<p class="text-sm font-bold">Inbound: Support Nexus</p>
+<p class="text-xs text-on-surface-variant">Customer: Linda Chen</p>
+</div>
+<div class="mx-4 px-3 py-1 rounded bg-tertiary-container text-on-tertiary-container text-[10px] font-bold">
+                            Positive Sentiment
+                        </div>
+<div class="w-32 text-right">
+<p class="text-xs font-bold">01:55</p>
+<p class="text-[10px] text-on-surface-variant">15 mins ago</p>
+</div>
+<div class="ml-8">
+<button class="p-2 rounded-full hover:bg-surface-container-low text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-sm">play_arrow</span>
+</button>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="flex items-center p-4 rounded-lg bg-surface transition-colors hover:bg-surface-container-low group">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0">
+<img alt="Agent Avatar" class="w-full h-full object-cover" data-alt="minimalist 3D rendered avatar of a female with clean tech aesthetics and soft glowing teal lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfMK4tTerB2osj0ilQptf-W8qfnIloTERgv-oS7azcPxatDpKcW37-4PqXj289Dv4GqF4zlaiRu82jkY1NVfaYEyQfLhUv9eZKQA7zbfxewzcfYCU_ZAjJ760nvKIL-mS3upIWZbWu0AipPVi19b_E5ON9Seam2JgoPBgObD2RAam1qs5lmfE-Pn29C1ZcuPMgUCIY1GU0R-3ofPKnvw8ek0DjPTncdNB-cDoRjgb_IbD0f6XrNg3LSoB5wrr_8zId04uGoGJdVjY"/>
+</div>
+<div class="ml-4 flex-1">
+<p class="text-sm font-bold">Billing: Payment Bot</p>
+<p class="text-xs text-on-surface-variant">Customer: Robert Fox</p>
+</div>
+<div class="mx-4 px-3 py-1 rounded bg-error-container/20 text-error text-[10px] font-bold">
+                            Dropped Call
+                        </div>
+<div class="w-32 text-right">
+<p class="text-xs font-bold">00:12</p>
+<p class="text-[10px] text-on-surface-variant">42 mins ago</p>
+</div>
+<div class="ml-8">
+<button class="p-2 rounded-full hover:bg-white text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-sm">info</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB Suppression: Not rendered on dashboard as per instructions -->
+</body></html>

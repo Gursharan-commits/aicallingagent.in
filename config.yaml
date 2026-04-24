@@ -1,0 +1,52 @@
+# ============================================================
+# Voice AI Platform — non-secret settings
+# ============================================================
+# Secrets (API keys, tokens) go in .env — NEVER in this file.
+# Change values here to switch providers, models, or behaviour
+# without touching any code.
+# ============================================================
+
+# ── Speech-to-Text ───────────────────────────────────────────
+stt:
+  provider: deepgram        # deepgram | sarvam
+  language: en-IN           # BCP-47 language tag fed to Deepgram
+                            # Sarvam is used automatically for Hindi/Hinglish
+                            # regardless of this setting
+  model: nova-3             # nova-3 has ~15% lower latency than nova-2
+  endpointing_ms: 300       # ms of trailing silence before utterance end
+  interim_results: true     # enables speech_final eager-trigger
+  vad_events: true          # receive SpeechStarted / UtteranceEnd events
+  utterance_end_ms: 1000    # backup: emit UtteranceEnd after N ms silence
+
+# ── Text-to-Speech ───────────────────────────────────────────
+tts:
+  provider: cartesia        # cartesia | sarvam | openai
+  voice: f786b574-daa5-4673-aa0c-cbe3e8534c02   # Cartesia voice UUID
+                            # For OpenAI use: alloy | echo | fable | onyx | nova | shimmer
+                            # For Sarvam the `voice` field is ignored (uses speaker below)
+  speed: 2.0                # Pace multiplier — valid range 0.25–4.0
+  language: en
+
+# ── Large Language Model ──────────────────────────────────────
+llm:
+  provider: openai          # gemini | openai
+  model: gpt-4o-mini   # Gemini: gemini-2.0-flash | gemini-2.5-flash | gemini-2.5-pro
+                            # OpenAI: gpt-4o-mini | gpt-4o
+  temperature: 0.65         # 0.0 (deterministic) – 2.0 (creative)
+  max_tokens: 80            # Keep low for voice — ~2 short sentences
+  system_prompt: >-
+    "You are a helpful sales assistant. Keep every response 
+    under 2 sentences. Be friendly and direct."
+
+# ── Pipeline ─────────────────────────────────────────────────
+pipeline:
+  interruption_enabled: true          # Barge-in: cancel bot reply when user speaks
+  conversation_history_length: 10     # Number of turns (user+bot pairs) kept in memory
+
+# ── Voice Activity Detection ─────────────────────────────────
+vad:
+  silence_timeout_ms: 300   # ms of silence before treating utterance as complete
+                            # (was 700 — reduced for lower E2E latency; raise if
+                            #  users get cut off mid-sentence in your environment)
+  energy_threshold: 600.0   # RMS energy (0–32767) that counts as speech during barge-in
+                            # Raise in noisy environments; lower for whisper input

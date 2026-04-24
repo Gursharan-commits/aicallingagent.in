@@ -1,0 +1,70 @@
+# ============================================================
+# Voice AI Platform — Python dependencies
+# ============================================================
+# Install everything:  pip install -r requirements.txt
+#
+# Python 3.10–3.12 recommended.
+# For Python 3.13+ also install audioop-lts (see below).
+# ============================================================
+
+# ── FastAPI / server ─────────────────────────────────────────
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+python-dotenv>=1.0.0
+
+# ── Pydantic / config ────────────────────────────────────────
+pydantic>=2.7.0
+pydantic-settings>=2.3.0
+
+# ── YAML ─────────────────────────────────────────────────────
+pyyaml>=6.0.1
+
+# ── STT ──────────────────────────────────────────────────────
+# Deepgram (primary STT) — stt_service.py uses raw WebSocket, NOT the SDK
+# client API.  Any version >=3 should work; pinned to tested version.
+deepgram-sdk>=5.3.2
+
+# Sarvam (Hindi/Hinglish STT + TTS) — uses raw websockets
+websockets>=14.0
+
+# ── TTS ──────────────────────────────────────────────────────
+# Cartesia (primary TTS)
+cartesia>=3.0.2
+
+# OpenAI (TTS fallback + LLM fallback)
+openai>=2.21.0
+
+# ── LLM ──────────────────────────────────────────────────────
+# Gemini (primary LLM)
+google-genai>=1.73.0
+
+# ── Telephony ────────────────────────────────────────────────
+twilio>=9.0.0
+
+# ── Test harness ─────────────────────────────────────────────
+# Coloured terminal output
+colorama>=0.4.6
+
+# Microphone / speaker I/O (mic mode)
+sounddevice>=0.4.7
+
+# ── Audio codec ───────────────────────────────────────────────
+# audioop is built into Python ≤ 3.12.
+# For Python 3.13+ uncomment the line below:
+# audioop-lts>=0.2.1
+
+# ── LiveKit agent (agent.py — optional standalone use) ───────
+# livekit>=0.13.0
+# livekit-agents>=0.8.0
+# livekit-plugins-deepgram>=0.6.0
+# livekit-plugins-google>=0.3.0
+# livekit-plugins-cartesia>=0.3.0
+# livekit-plugins-silero>=0.6.0
+
+# ── Django Backend ───────────────────────────────────────────
+django>=5.0.0
+djangorestframework>=3.15.0
+django-cors-headers>=4.3.0
+channels>=4.0.0
+daphne>=4.0.0
+channels-redis>=4.2.0

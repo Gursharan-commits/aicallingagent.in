@@ -1,0 +1,71 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--on-surface);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-manrope);
+  
+  --color-primary: var(--primary);
+  --color-primary-dim: var(--primary-dim);
+  --color-secondary: var(--secondary);
+  --color-surface: var(--surface);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-error: var(--error);
+  --color-outline-variant: var(--outline-variant);
+
+  --color-border: var(--outline-variant);
+  --color-input: var(--surface-container-high);
+  --color-ring: var(--primary);
+  --color-card: var(--surface-container-lowest);
+  --color-card-foreground: var(--on-surface);
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+}
+
+:root {
+  /* Updated exact mockup colors */
+  --background: #f4f5f7;
+  --surface: #f4f5f7;
+  --surface-container: #eaeff1;
+  --surface-container-low: #f8f9fb;
+  --surface-container-lowest: #ffffff;
+  --surface-container-highest: #e3e9ec;
+  --surface-container-high: #e3e9ec;
+  
+  --on-surface: #111827;
+  --on-surface-variant: #6b7280;
+  
+  --primary: #2563eb;
+  --primary-dim: #3b82f6;
+  --secondary: #10b981;
+  --error: #ef4444;
+  
+  --outline-variant: #e5e7eb;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-on-surface font-sans;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+}
