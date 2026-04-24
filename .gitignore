@@ -56,14 +56,26 @@ frontend/yarn-error.log*
 
 # ── graphify outputs ─────────────────────────────────────────
 # Keep GRAPH_REPORT.md and graph.html as documentation,
-# but exclude large JSON blobs and temp files
+# but exclude large JSON blobs, cache, and temp files
 graphify-out/graph.json
 graphify-out/graph_rag.json
+graphify-out/cache/
+graphify-out/cost.json
+graphify-out/manifest.json
 graphify-out/.graphify_*.json
 graphify-out/.graphify_*.txt
 graphify-out/*.svg
 graphify-out/cypher.txt
 .graphify_python
+
+# ── Celery runtime files ──────────────────────────────────────
+celerybeat-schedule
+celerybeat-schedule-shm
+celerybeat-schedule-wal
+celerybeat.pid
+
+# ── Runtime logs / metrics ───────────────────────────────────
+metrics_log.jsonl
 
 # ── OS / editor artifacts ────────────────────────────────────
 .DS_Store
