@@ -1,33 +1,118 @@
+"""
+4-tier RBAC permission classes for Django REST Framework.
+
+Usage example in a view:
+    permission_classes = [IsSameTenant, IsTenantAdmin]
+
+Hierarchy (additive — each class grants its tier AND all lower ones):
+    SuperAdmin   > Admin > TenantAdmin > TenantUser (IsAuthenticated covers all)
+
+All classes read role/tenant_id from the JWT payload to avoid DB lookups.
+"""
+
 from rest_framework.permissions import BasePermission
 
+__all__ = [
+    "IsSameTenant",
+    "IsSuperAdmin",
+    "IsAdmin",
+    "IsTenantAdmin",
+    "IsTenantUser",
+]
+
+# ── Helpers ───────────────────────────────────────────────────────────────────
+
+def _jwt_claim(request, key):
+    """Safely extract a claim from the DRF JWT auth payload."""
+    return request.auth.get(key) if request.auth else None
+
+
+# ── Tenant isolation ──────────────────────────────────────────────────────────
 
 class IsSameTenant(BasePermission):
     """
-    Enforces multi-tenant isolation at the API layer.
-    Reads tenant_id from the JWT payload (no DB hit) and blocks any request
-    where the object's tenant does not match the authenticated user's tenant.
+    Enforces multi-tenant object isolation at the API layer.
+
+    - SuperAdmins bypass the tenant check (they own all tenants).
+    - All other roles must have a matching tenant_id on the target object.
     """
+
     message = "You do not have permission to access resources from another tenant."
 
-    def has_permission(self, request, view):
+    def has_permission(self, request, view) -> bool:
         return bool(request.user and request.user.is_authenticated)
 
-    def has_object_permission(self, request, view, obj):
-        # Extract tenant_id from JWT claim directly
-        token_tenant_id = request.auth.get('tenant_id') if request.auth else None
+    def has_object_permission(self, request, view, obj) -> bool:
+        role = _jwt_claim(request, "role")
+        if role == "super_admin":
+            return True
 
-        # Resolve the object's tenant FK (handles both direct tenant and nested)
-        if hasattr(obj, 'tenant_id'):
+        token_tenant_id = _jwt_claim(request, "tenant_id")
+        if token_tenant_id is None:
+            return False
+
+        if hasattr(obj, "tenant_id"):
             return obj.tenant_id == token_tenant_id
-        if hasattr(obj, 'tenant'):
+        if hasattr(obj, "tenant"):
             return obj.tenant.id == token_tenant_id
-
         return False
 
 
-class IsAdminRole(BasePermission):
-    """Restricts access to users with admin role (within their own tenant)."""
+# ── Role gates ────────────────────────────────────────────────────────────────
 
-    def has_permission(self, request, view):
-        token_role = request.auth.get('role') if request.auth else None
-        return token_role == 'admin'
+class IsSuperAdmin(BasePermission):
+    """Platform-level access only. Allows managing all tenants."""
+
+    message = "Super Admin access required."
+
+    def has_permission(self, request, view) -> bool:
+        return _jwt_claim(request, "role") == "super_admin"
+
+
+class IsAdmin(BasePermission):
+    """
+    Tenant Admin (full) — includes super_admin.
+    Use for destructive operations within a tenant (delete configs, etc.).
+    """
+
+    message = "Admin access required."
+
+    def has_permission(self, request, view) -> bool:
+        return _jwt_claim(request, "role") in ("super_admin", "admin")
+
+
+class IsTenantAdmin(BasePermission):
+    """
+    Tenant-level management — includes super_admin and admin.
+    Use for creating/updating campaigns, agent configs, tools.
+    """
+
+    message = "Tenant Admin access required."
+
+    def has_permission(self, request, view) -> bool:
+        return _jwt_claim(request, "role") in (
+            "super_admin",
+            "admin",
+            "tenant_admin",
+        )
+
+
+class IsTenantUser(BasePermission):
+    """
+    Basic authenticated tenant member — any of the 4 roles.
+    Use for read-heavy endpoints (call logs, transcripts).
+    """
+
+    message = "Authenticated tenant user required."
+
+    def has_permission(self, request, view) -> bool:
+        return bool(
+            request.user
+            and request.user.is_authenticated
+            and _jwt_claim(request, "role") in (
+                "super_admin",
+                "admin",
+                "tenant_admin",
+                "tenant_user",
+            )
+        )

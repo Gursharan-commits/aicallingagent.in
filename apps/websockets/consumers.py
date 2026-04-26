@@ -4,13 +4,14 @@ CallConsumer — Django Channels WebSocket consumer.
 Responsibilities:
 - Relay transcript events from Redis channel layer to the connected frontend.
 - Receive human-takeover control commands from the frontend and broadcast them.
-- Persist every transcript event to the Transcript model (telemetry write-through).
+- Persist every transcript event to the Transcript model with PII masking applied.
 """
 
 import json
 import logging
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
+from apps.calls.pii import mask_pii
 
 logger = logging.getLogger(__name__)
 
@@ -22,39 +23,37 @@ class CallConsumer(AsyncWebsocketConsumer):
     """
 
     async def connect(self) -> None:
-        """Accept the connection and join the Redis broadcast group for this call."""
         self.call_id: str = self.scope["url_route"]["kwargs"]["call_id"]
         self.room_group_name: str = f"call_{self.call_id}"
 
-        await self.channel_layer.group_add(self.room_group_name, self.channel_name)
+        # Tenant isolation: verify the connecting user has access to this call.
+        user = self.scope.get("user")
+        if user and user.is_authenticated:
+            allowed = await self._check_call_access(user, self.call_id)
+            if not allowed:
+                logger.warning(
+                    "[WS] Rejected — user %s has no access to call %s",
+                    user.id, self.call_id,
+                )
+                await self.close(code=4003)
+                return
 
+        await self.channel_layer.group_add(self.room_group_name, self.channel_name)
         logger.info("[WS] Connected — call_id=%s", self.call_id)
         await self.accept()
-
-        # Notify client that the WS connection is ready.
-        await self.send(
-            text_data=json.dumps({"type": "connection_ready", "call_id": self.call_id})
-        )
+        await self.send(text_data=json.dumps({"type": "connection_ready", "call_id": self.call_id}))
 
     async def disconnect(self, close_code: int) -> None:
-        """Leave the Redis group on disconnect."""
         logger.info("[WS] Disconnected — call_id=%s code=%s", self.call_id, close_code)
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
-    # ──────────────────────────────────────────────────────────
-    # Inbound messages from the frontend client
-    # ──────────────────────────────────────────────────────────
+    # ── Inbound (from frontend) ───────────────────────────────────────────────
 
     async def receive(self, text_data: str) -> None:
-        """
-        Handle messages sent by the frontend over WebSocket.
-        Supported actions:
-            - human_takeover: broadcast a control event to the GraphExecutor.
-        """
         try:
             data: dict = json.loads(text_data)
         except json.JSONDecodeError:
-            logger.warning("[WS] Received non-JSON message — call_id=%s", self.call_id)
+            logger.warning("[WS] Non-JSON message — call_id=%s", self.call_id)
             return
 
         action = data.get("action")
@@ -65,72 +64,75 @@ class CallConsumer(AsyncWebsocketConsumer):
                 self.room_group_name,
                 {"type": "control_event", "event": "HUMAN_TAKEOVER"},
             )
+        elif action == "ping":
+            await self.send(text_data=json.dumps({"type": "pong"}))
         else:
             logger.debug("[WS] Unknown action=%s — call_id=%s", action, self.call_id)
 
-    # ──────────────────────────────────────────────────────────
-    # Outbound messages from the Redis channel layer
-    # ──────────────────────────────────────────────────────────
+    # ── Outbound (from Redis channel layer) ───────────────────────────────────
 
     async def transcript_stream(self, event: dict) -> None:
         """
-        Relay a transcript event from Redis to the connected frontend browser.
-        Also persists the transcript line to the database for analytics.
+        Relay a transcript chunk to the browser and persist it.
+        PII masking is applied before the DB write; the raw text is still
+        sent to the frontend (operator UI) but the masked version is stored.
         """
         text: str = event.get("text", "")
         role: str = event.get("role", "bot")
 
-        # Write to DB asynchronously without blocking the event loop.
         await self._persist_transcript(self.call_id, role, text)
 
-        await self.send(
-            text_data=json.dumps(
-                {
-                    "type": "transcript",
-                    "call_id": self.call_id,
-                    "role": role,
-                    "text": text,
-                }
-            )
-        )
+        await self.send(text_data=json.dumps({
+            "type": "transcript",
+            "call_id": self.call_id,
+            "role": role,
+            "text": text,
+        }))
 
     async def control_event(self, event: dict) -> None:
-        """Echo control events (e.g. HUMAN_TAKEOVER confirmation) back to the client."""
-        await self.send(
-            text_data=json.dumps(
-                {
-                    "type": "control",
-                    "call_id": self.call_id,
-                    "action": event.get("event"),
-                }
-            )
-        )
+        await self.send(text_data=json.dumps({
+            "type": "control",
+            "call_id": self.call_id,
+            "action": event.get("event"),
+        }))
 
-    # ──────────────────────────────────────────────────────────
-    # Database helpers (run in Django ORM thread pool)
-    # ──────────────────────────────────────────────────────────
+    # ── Helpers ───────────────────────────────────────────────────────────────
 
     @database_sync_to_async
     def _persist_transcript(self, call_id: str, role: str, text: str) -> None:
         """
-        Write a Transcript row to the database for the given call.
-        Silently skips if the Call record does not exist yet
-        (e.g. during local dev without a real telephony session).
+        Persist a transcript line. PII masking is applied inside
+        Transcript.save() via the model's override, so all stored
+        transcripts have text_masked populated automatically.
         """
         try:
-            from apps.calls.models import Call, Transcript  # Local import avoids circular refs
+            from apps.calls.models import Call, Transcript
 
             call = Call.objects.filter(livekit_room_id=call_id).first()
             if call is None:
-                logger.debug(
-                    "[WS] Transcript skipped — no Call record for call_id=%s", call_id
-                )
+                logger.debug("[WS] Transcript skipped — no Call for call_id=%s", call_id)
                 return
 
-            # Normalise the role to match Transcript.ROLE_CHOICES
             db_role = role if role in ("user", "bot", "system") else "bot"
             Transcript.objects.create(call=call, role=db_role, text=text)
             logger.debug("[WS] Transcript persisted — call_id=%s role=%s", call_id, role)
 
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             logger.error("[WS] Failed to persist transcript: %s", exc)
+
+    @database_sync_to_async
+    def _check_call_access(self, user, call_id: str) -> bool:
+        """
+        Return True if the authenticated user's tenant owns this call.
+        SuperAdmins bypass the check.
+        """
+        try:
+            if user.role == "super_admin":
+                return True
+            from apps.calls.models import Call
+            return Call.objects.filter(
+                livekit_room_id=call_id,
+                tenant_id=user.tenant_id,
+            ).exists()
+        except Exception:
+            return False

@@ -64,7 +64,21 @@ sounddevice>=0.4.7
 # ── Django Backend ───────────────────────────────────────────
 django>=5.0.0
 djangorestframework>=3.15.0
+djangorestframework-simplejwt>=5.3.0
 django-cors-headers>=4.3.0
 channels>=4.0.0
 daphne>=4.0.0
 channels-redis>=4.2.0
+psycopg2-binary>=2.9.9        # Postgres driver
+
+# ── Async HTTP (API Tool node) ────────────────────────────────
+aiohttp>=3.9.0
+
+# ── LiveKit Agents SDK ────────────────────────────────────────
+livekit>=0.13.0
+livekit-agents>=0.8.0
+
+# ── Celery ────────────────────────────────────────────────────
+celery>=5.3.0
+celery[redis]>=5.3.0
+django-celery-beat>=2.6.0

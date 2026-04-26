@@ -57,6 +57,8 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # ↓ Sets thread-local tenant context for RegionRouter (after auth so JWT is available)
+    'apps.tenants.middleware.TenantContextMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -108,23 +110,51 @@ CELERY_TIMEZONE = 'UTC'
 # Prevent tasks from running eagerly in tests; use CELERY_TASK_ALWAYS_EAGER=True in test settings
 CELERY_TASK_ALWAYS_EAGER = False
 
+# ── Celery Beat — scheduled tasks ─────────────────────────────────────────────
+from celery.schedules import crontab  # noqa: E402
+
+CELERY_BEAT_SCHEDULE = {
+    'realtime-billing': {
+        'task': 'apps.billing.tasks.calculate_realtime_billing',
+        'schedule': 10.0,  # every 10 seconds
+    },
+}
+
 AUTH_USER_MODEL = 'users.User'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
+def _pg(env_prefix: str, db_name_default: str) -> dict:
+    """Build a Postgres DB config from env vars with SQLite fallback for local dev."""
+    pg_host = os.environ.get(f'{env_prefix}_HOST', '')
+    if pg_host:
+        return {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get(f'{env_prefix}_NAME', db_name_default),
+            'USER': os.environ.get(f'{env_prefix}_USER', 'postgres'),
+            'PASSWORD': os.environ.get(f'{env_prefix}_PASSWORD', ''),
+            'HOST': pg_host,
+            'PORT': os.environ.get(f'{env_prefix}_PORT', '5432'),
+            'OPTIONS': {
+                # Force UTC session timezone; let Django handle tz-aware datetimes.
+                'options': '-c timezone=UTC',
+            },
+            'CONN_MAX_AGE': 60,
+        }
+    # Local dev fallback — SQLite (no Postgres installed)
+    return {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db_global.sqlite3',
-    },
-    'india_db': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db_india.sqlite3',
-    },
-    'uk_db': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db_uk.sqlite3',
+        'NAME': BASE_DIR / f'db_{db_name_default}.sqlite3',
     }
+
+
+DATABASES = {
+    # Global DB — tenants, users, auth tables (always default)
+    'default': _pg('DB_GLOBAL', 'global'),
+    # India shard — target: ap-south-1 RDS
+    'india_db': _pg('DB_INDIA', 'india'),
+    # UK shard — target: eu-west-2 RDS
+    'uk_db': _pg('DB_UK', 'uk'),
 }
 
 DATABASE_ROUTERS = ['backend.db_routers.RegionRouter']
